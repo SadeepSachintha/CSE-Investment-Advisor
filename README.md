@@ -2,7 +2,7 @@
 title: CSE Investment Advisor
 emoji: 📈
 colorFrom: indigo
-colorTo: cyan
+colorTo: blue
 sdk: static
 pinned: false
 ---
