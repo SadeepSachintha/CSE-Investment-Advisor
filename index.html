@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSE Investment Advisor | Colombo Stock Exchange Trading Sandbox</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="An interactive investment advisor and virtual trading portfolio simulator for the Colombo Stock Exchange (CSE), featuring ASPI and S&P SL20 trackers, statutory brokerage calculators, and real-time financial intelligence.">
+  <meta name="keywords" content="CSE, Colombo Stock Exchange, Investment Advisor, Sri Lanka Stocks, Virtual Portfolio, Broker Calculator, ASPI, S&P SL20, JKH, Commercial Bank">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Modern Style Sheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- CDN Dependencies -->
+  <!-- Chart.js for beautiful analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons for premium visual components -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- 1. Sidebar Navigation -->
+    <aside class="sidebar">
+      <a href="#" class="logo-section">
+        <div class="logo-icon">
+          <i data-lucide="trending-up"></i>
+        </div>
+        <span class="logo-text">CSE Advisor</span>
+      </a>
+      
+      <nav class="nav-links">
+        <li class="nav-item active">
+          <a href="#" data-view="dashboard">
+            <i data-lucide="layout-dashboard"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" data-view="explorer">
+            <i data-lucide="bar-chart-4"></i>
+            <span>Stock Explorer</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" data-view="portfolio">
+            <i data-lucide="briefcase"></i>
+            <span>Virtual Portfolio</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" data-view="chat">
+            <i data-lucide="message-square"></i>
+            <span>AI Advisor</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" data-view="calculator">
+            <i data-lucide="calculator"></i>
+            <span>Broker Calculator</span>
+          </a>
+        </li>
+      </nav>
+      
+      <footer class="sidebar-footer">
+        <div class="user-profile">
+          <div class="avatar">SI</div>
+          <div class="user-info">
+            <span class="user-name">Sadeep Investor</span>
+            <span class="user-role">Premium Sandbox</span>
+          </div>
+        </div>
+      </footer>
+    </aside>
+    
+    <!-- 2. Main Content Panels -->
+    <main class="main-content">
+      
+      <!-- Top Dynamic Header -->
+      <header class="top-header">
+        <div class="welcome-pane">
+          <h1 id="view-greeting">Colombo Equity Markets</h1>
+          <p>Real-time simulated stats, trading sandbox, and active advisory tools.</p>
+        </div>
+        
+        <!-- Live Market Status Box -->
+        <div class="market-status-box">
+          <div class="status-indicator">
+            <span id="market-status-dot" class="status-dot active"></span>
+            <span id="market-status-text" class="status-label text-positive">Market Open</span>
+          </div>
+          <div id="market-time-label" class="status-time">Closes in: 04h 22m 15s</div>
+        </div>
+      </header>
+
+      <!-- ==============================================
+           VIEW: DASHBOARD
+           ============================================== -->
+      <section id="dashboard-view" class="view-panel active">
+        <!-- Indices Grid -->
+        <div class="indices-grid">
+          <!-- ASPI Card -->
+          <div class="glass-card primary-edge" onclick="window.sendAdvisorPrompt('Tell me about ASPI Index')">
+            <div class="index-header">
+              <span class="index-title">ASPI (All Share Price Index)</span>
+              <div class="index-sparkline">
+                <canvas id="aspi-sparkline"></canvas>
+              </div>
+            </div>
+            <div class="index-body">
+              <span id="aspi-value" class="index-value">11,842.50</span>
+              <div id="aspi-change" class="index-change-box">
+                <span class="price-change positive"><i data-lucide="trending-up"></i> +85.30</span>
+                <span class="change-percent">0.73%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- S&P SL20 Card -->
+          <div class="glass-card accent-edge" onclick="window.sendAdvisorPrompt('Tell me about S&P SL20 Index')">
+            <div class="index-header">
+              <span class="index-title">S&P SL20 Blue-chip Index</span>
+              <div class="index-sparkline">
+                <canvas id="spsl20-sparkline"></canvas>
+              </div>
+            </div>
+            <div class="index-body">
+              <span id="sp-value" class="index-value">3,456.80</span>
+              <div id="sp-change" class="index-change-box">
+                <span class="price-change positive"><i data-lucide="trending-up"></i> +32.10</span>
+                <span class="change-percent">0.94%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Core Split -->
+        <div class="dashboard-grid">
+          <!-- Market Leaderboards -->
+          <div class="glass-card">
+            <h3 class="panel-title"><i data-lucide="zap"></i> Daily Market Movers</h3>
+            <p class="card-desc">Quickly monitor the best performers, heaviest decliners, and high-volume trades today.</p>
+            
+            <div class="market-lists-split" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
+              <!-- Gainers -->
+              <div>
+                <h4 class="mb-3 text-emerald"><i data-lucide="trending-up" class="mr-2"></i> Top Gainers</h4>
+                <div class="table-container">
+                  <table class="market-table">
+                    <tbody id="gainers-list">
+                      <!-- Dynamically filled by app.js -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Losers -->
+              <div>
+                <h4 class="mb-3 text-negative"><i data-lucide="trending-down" class="mr-2"></i> Top Losers</h4>
+                <div class="table-container">
+                  <table class="market-table">
+                    <tbody id="losers-list">
+                      <!-- Dynamically filled by app.js -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Active Volume -->
+              <div>
+                <h4 class="mb-3 text-accent"><i data-lucide="activity" class="mr-2"></i> Most Active</h4>
+                <div class="table-container">
+                  <table class="market-table">
+                    <tbody id="active-list">
+                      <!-- Dynamically filled by app.js -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Market News Feed -->
+          <div class="glass-card">
+            <h3 class="panel-title"><i data-lucide="globe"></i> CSE Market News</h3>
+            <p class="card-desc">Stay ahead with the latest corporate disclosures and macro bulletins.</p>
+            
+            <div id="news-container" class="news-container">
+              <!-- Dynamically filled by app.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           VIEW: STOCK EXPLORER
+           ============================================== -->
+      <section id="explorer-view" class="view-panel">
+        <div class="glass-card">
+          <h3 class="panel-title"><i data-lucide="search"></i> Colombo Stock Explorer</h3>
+          <p class="card-desc">Review listed equities, filter by industrial sector, and sort based on valuation multiples or yields.</p>
+          
+          <!-- Search/Filters row -->
+          <div class="filters-row">
+            <div class="search-wrapper">
+              <i data-lucide="search"></i>
+              <input type="text" id="explorer-search" class="search-input" placeholder="Search by company name or ticker (e.g. JKH, COMB, Dialog)...">
+            </div>
+            
+            <select id="explorer-sector-filter" class="select-filter">
+              <option value="all">All Sectors</option>
+              <option value="Capital Goods">Capital Goods</option>
+              <option value="Banking">Banking</option>
+              <option value="Diversified Financials">Diversified Financials</option>
+              <option value="Telecommunication">Telecommunication</option>
+              <option value="Food, Beverage & Tobacco">Food & Beverages</option>
+              <option value="Food & Staples Retailing">Food Retailing</option>
+              <option value="Energy">Energy</option>
+              <option value="Construction & Capital Goods">Construction</option>
+            </select>
+
+            <select id="explorer-sort-select" class="select-filter">
+              <option value="cap-desc">Market Cap (High to Low)</option>
+              <option value="price-desc">Price (High to Low)</option>
+              <option value="price-asc">Price (Low to High)</option>
+              <option value="change-desc">Change % (Highest First)</option>
+              <option value="change-asc">Change % (Lowest First)</option>
+              <option value="pe-asc">P/E Valuation (Cheapest First)</option>
+              <option value="div-desc">Dividend Yield (Highest First)</option>
+            </select>
+          </div>
+
+          <!-- Explorer Stock Matrix -->
+          <div class="table-container">
+            <table class="market-table">
+              <thead>
+                <tr>
+                  <th>Equity / Company</th>
+                  <th>Sector</th>
+                  <th>Last Price</th>
+                  <th>Change (%)</th>
+                  <th>P/E Ratio</th>
+                  <th>Div Yield</th>
+                  <th>Market Cap</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="explorer-table-body">
+                <!-- Dynamically filled by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           VIEW: VIRTUAL PORTFOLIO
+           ============================================== -->
+      <section id="portfolio-view" class="view-panel">
+        <!-- Portfolio Stats Overview -->
+        <div class="portfolio-header-grid">
+          <div class="glass-card primary-edge">
+            <span class="label">Virtual Cash Balance</span>
+            <span id="portfolio-cash" class="value" style="font-size: 1.6rem; font-weight: 700; margin-top: 0.5rem; display: block; font-family: 'Outfit';">LKR 1,000,000.00</span>
+            <span class="sub text-dim">Ready for allocation</span>
+          </div>
+          
+          <div class="glass-card accent-edge">
+            <span class="label">Total Holdings Value</span>
+            <span id="portfolio-assets" class="value" style="font-size: 1.6rem; font-weight: 700; margin-top: 0.5rem; display: block; font-family: 'Outfit';">LKR 0.00</span>
+            <span class="sub text-dim">At current market prices</span>
+          </div>
+
+          <div class="glass-card">
+            <span class="label">Total Portfolio Worth</span>
+            <span id="portfolio-total-val" class="value" style="font-size: 1.6rem; font-weight: 700; margin-top: 0.5rem; display: block; font-family: 'Outfit';">LKR 1,000,000.00</span>
+            <span class="sub text-dim">Combined Worth</span>
+          </div>
+
+          <div id="portfolio-returns" class="glass-card primary-edge">
+            <span class="label">Net Virtual Return</span>
+            <span class="value text-positive" style="font-size: 1.6rem; font-weight: 700; margin-top: 0.5rem; display: block; font-family: 'Outfit';">+LKR 0.00</span>
+            <span class="sub">0.00% (Initial LKR 1.0M)</span>
+          </div>
+        </div>
+
+        <!-- Portfolio breakdown section -->
+        <div class="portfolio-chart-layout">
+          <!-- Holdings Table -->
+          <div class="glass-card">
+            <h3 class="panel-title"><i data-lucide="briefcase"></i> Current Asset Allocation</h3>
+            <p class="card-desc">Detailed index of your purchased shares, weighted average cost basis, and paper profits.</p>
+            
+            <div class="table-container">
+              <table class="market-table">
+                <thead>
+                  <tr>
+                    <th>Asset Ticker</th>
+                    <th>Held Quantity</th>
+                    <th>Average Buy Cost</th>
+                    <th>Current Value</th>
+                    <th>Market Value</th>
+                    <th>Unrealized Return</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="portfolio-holdings-body">
+                  <!-- Dynamically filled by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Diversification Chart -->
+          <div class="glass-card">
+            <h3 class="panel-title"><i data-lucide="pie-chart"></i> Sector Diversification</h3>
+            <p class="card-desc">Visual distribution of asset risk exposure.</p>
+            <div class="chart-wrapper-container">
+              <canvas id="portfolio-sector-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           VIEW: AI FINANCIAL ADVISOR
+           ============================================== -->
+      <section id="chat-view" class="view-panel">
+        <div class="advisor-layout">
+          <!-- Sidebar Prompts & Stats -->
+          <div class="advisor-sidebar">
+            <div class="glass-card primary-edge" style="height: 100%;">
+              <h4 class="card-title text-accent"><i data-lucide="shield-check"></i> Ariya Financial Advisor</h4>
+              <p class="card-desc text-small">Equipped with deep Sri Lankan capital market knowledge, broker fee structures, and valuation filters. Choose a quick analysis screen below:</p>
+              
+              <div class="vertical-prompts" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <button class="btn btn-secondary text-small" style="justify-content: flex-start;" onclick="sendAdvisorPrompt('Evaluate My Portfolio')">
+                  <i data-lucide="shield-check"></i> Evaluate My Portfolio
+                </button>
+                
+                <button class="btn btn-secondary text-small" style="justify-content: flex-start;" onclick="sendAdvisorPrompt('Find Dividend Stars')">
+                  <i data-lucide="award"></i> Find Dividend Stars
+                </button>
+
+                <button class="btn btn-secondary text-small" style="justify-content: flex-start;" onclick="sendAdvisorPrompt('Value Investing Screen')">
+                  <i data-lucide="trending-down"></i> Value Investing Screen
+                </button>
+
+                <button class="btn btn-secondary text-small" style="justify-content: flex-start;" onclick="sendAdvisorPrompt('Market Outlook')">
+                  <i data-lucide="globe"></i> Market Outlook Report
+                </button>
+              </div>
+
+              <div class="outlook-box mt-3 text-small">
+                <h5>Pro Advisory Tip:</h5>
+                <p>Type stock ticker symbols directly (e.g. <strong>"JKH"</strong> or <strong>"COMB"</strong>) into the advisor chat to fetch customized valuations, buy ratings, and structural catalyst analysis.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Window Box -->
+          <div class="chat-room-container">
+            <!-- Header -->
+            <div class="chat-header-pane">
+              <div class="advisor-avatar-circle">
+                <i data-lucide="sparkles" style="color: #fff; width: 20px; height: 20px;"></i>
+              </div>
+              <div class="advisor-meta-info">
+                <h4>Ariya Advisor</h4>
+                <span><i data-lucide="zap"></i> Active AI Analytics</span>
+              </div>
+            </div>
+
+            <!-- Messages Log -->
+            <div id="chat-log" class="chat-message-log">
+              <!-- Dynamically populated bubbles from localStorage/app.js -->
+            </div>
+
+            <!-- Input Bar -->
+            <div class="chat-input-bar">
+              <input type="text" id="chat-input" class="chat-text-input" placeholder="Ask Ariya about CSE stocks, valuation, trading fees or port city...">
+              <button id="chat-submit" class="btn btn-primary"><i data-lucide="send"></i> Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           VIEW: TRANSACTION FEE CALCULATOR
+           ============================================== -->
+      <section id="calculator-view" class="view-panel">
+        <div class="glass-card">
+          <h3 class="panel-title"><i data-lucide="calculator"></i> Official CSE Brokerage Calculator</h3>
+          <p class="card-desc">Compute exact statutory costs for transactions on the Colombo Stock Exchange. Standard retail fee schedule totals **0.82%** of volume.</p>
+          
+          <div class="calculator-grid" style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 2rem; margin-top: 1.5rem;">
+            <!-- Inputs Pane -->
+            <div>
+              <div class="form-group">
+                <label class="form-label">Trade Action</label>
+                <div style="display: flex; gap: 1rem; margin-top: 0.25rem;">
+                  <label class="btn btn-secondary flex-grow-1" style="cursor: pointer; gap: 0.25rem;">
+                    <input type="radio" name="calc-action" value="buy" checked style="accent-color: var(--primary);"> BUY Shares
+                  </label>
+                  <label class="btn btn-secondary flex-grow-1" style="cursor: pointer; gap: 0.25rem;">
+                    <input type="radio" name="calc-action" value="sell" style="accent-color: var(--primary);"> SELL Shares
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="calc-symbol" class="form-label">Select Equity Ticker</label>
+                <select id="calc-symbol" class="form-input select-filter" style="width: 100%; background-position: right 1rem center;" data-prev-val="JKH.N0000">
+                  <option value="JKH.N0000">JKH - John Keells Holdings PLC</option>
+                  <option value="COMB.N0000">COMB - Commercial Bank of Ceylon PLC</option>
+                  <option value="SAMP.N0000">SAMP - Sampath Bank PLC</option>
+                  <option value="LOLC.N0000">LOLC - LOLC Holdings PLC</option>
+                  <option value="HAYL.N0000">HAYL - Hayleys PLC</option>
+                  <option value="DIAL.N0000">DIAL - Dialog Axiata PLC</option>
+                  <option value="HNB.N0000">HNB - Hatton National Bank PLC</option>
+                  <option value="LIOC.N0000">LIOC - Lanka IOC PLC</option>
+                  <option value="MELS.N0000">MELS - Melstacorp PLC</option>
+                  <option value="HHL.N0000">HHL - Hemas Holdings PLC</option>
+                  <option value="LFIN.N0000">LFIN - L B Finance PLC</option>
+                  <option value="SLTL.N0000">SLTL - Sri Lanka Telecom PLC</option>
+                  <option value="CCS.N0000">CCS - Ceylon Cold Stores PLC</option>
+                  <option value="CARG.N0000">CARG - Cargills (Ceylon) PLC</option>
+                  <option value="BIL.N0000">BIL - Browns Investments PLC</option>
+                  <option value="AEL.N0000">AEL - Access Engineering PLC</option>
+                </select>
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="calc-qty" class="form-label">Transaction Quantity (Shares)</label>
+                <input type="number" id="calc-qty" class="form-input" value="1000" min="1" step="100">
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="calc-price" class="form-label">Trade Price (LKR per Share)</label>
+                <input type="number" id="calc-price" class="form-input" value="192.50" min="0.01" step="0.05">
+              </div>
+            </div>
+
+            <!-- Receipt Pane -->
+            <div class="calc-breakdown-card">
+              <h4 id="rec-title" class="calc-title">Purchase Breakdown</h4>
+              
+              <div class="receipt-row">
+                <span>Target Share Ticker:</span>
+                <strong id="rec-ticker">JKH</strong>
+              </div>
+              <div class="receipt-row">
+                <span>Target Trade Volume:</span>
+                <strong id="rec-qty">1,000</strong>
+              </div>
+              <div class="receipt-row">
+                <span>Negotiated Share Price:</span>
+                <strong id="rec-price">LKR 192.50</strong>
+              </div>
+              
+              <div class="receipt-row mt-3" style="border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+                <span>Gross Market Value:</span>
+                <strong id="rec-value" class="text-accent">LKR 192,500.00</strong>
+              </div>
+
+              <!-- Statutory Charges -->
+              <div class="receipt-row" style="margin-top: 0.5rem;">
+                <span>Broker Commission (0.640%):</span>
+                <span id="rec-broker">LKR 1,232.00</span>
+              </div>
+              <div class="receipt-row">
+                <span>CSE Cess (0.084%):</span>
+                <span id="rec-cess">LKR 161.70</span>
+              </div>
+              <div class="receipt-row">
+                <span>SEC Levy (0.072%):</span>
+                <span id="rec-sec">LKR 138.60</span>
+              </div>
+              <div class="receipt-row">
+                <span>CDS Handling Fee (0.024%):</span>
+                <span id="rec-cds">LKR 46.20</span>
+              </div>
+              <div class="receipt-row" style="font-weight: 500;">
+                <span>Total Statutory Fees (0.82%):</span>
+                <span id="rec-total-fees" class="text-negative">LKR 1,578.50</span>
+              </div>
+
+              <!-- Settlement Value -->
+              <div class="receipt-row bold-total">
+                <span id="rec-grand-label">Total Settlement Cost:</span>
+                <span id="rec-grand" class="text-emerald">LKR 194,078.50</span>
+              </div>
+
+              <!-- Percent drag text -->
+              <div id="rec-analysis">
+                <!-- Filled dynamically by app.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==============================================
+       STOCK DETAILED VIEW & VIRTUAL TRADING MODAL
+       ============================================== -->
+  <div id="stock-detail-modal" class="modal-overlay">
+    <div class="modal-container">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span id="modal-stock-ticker" class="logo-icon font-bold" style="font-size: 0.8rem; padding: 0.25rem;">JKH</span>
+          <h3 id="modal-stock-name">John Keells Holdings PLC</h3>
+        </div>
+        <button class="close-modal-btn" onclick="closeModal()">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="stock-details-grid">
+          
+          <!-- Column A: Charts & Core Overview -->
+          <div>
+            <div class="chart-section-pane">
+              <div class="chart-header">
+                <h4 style="font-size: 0.95rem; font-weight: 600;"><i data-lucide="line-chart"></i> 30-Day Closing History</h4>
+                <div class="chart-nav">
+                  <button class="chart-nav-btn active">1M</button>
+                </div>
+              </div>
+              <div style="height: 220px; position: relative;">
+                <canvas id="modal-stock-chart"></canvas>
+              </div>
+            </div>
+            
+            <div class="mt-3">
+              <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.35rem;"><i data-lucide="info"></i> Business Overview</h4>
+              <p id="m-description" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                John Keells Holdings PLC is Sri Lanka's largest conglomerate, active in logistics, retail, real estate, and financial solutions.
+              </p>
+            </div>
+          </div>
+
+          <!-- Column B: Financial Ratios & Trade Sandbox -->
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- Financial Ratios Matrix -->
+            <div class="glass-card py-3 px-3" style="margin: 0; background: rgba(255,255,255,0.01);">
+              <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem;"><i data-lucide="bar-chart-2"></i> Technical & Valuation Multiples</h4>
+              <div class="stats-sub-grid">
+                <div class="stat-item">
+                  <span class="label">P/E Ratio</span>
+                  <span id="m-pe" class="value">14.5x</span>
+                </div>
+                <div class="stat-item">
+                  <span class="label">Div Yield</span>
+                  <span id="m-yield" class="value">3.2%</span>
+                </div>
+                <div class="stat-item">
+                  <span class="label">Earnings/Share</span>
+                  <span id="m-eps" class="value">LKR 13.28</span>
+                </div>
+                <div class="stat-item">
+                  <span class="label">Book Value</span>
+                  <span id="m-bv" class="value">LKR 165.40</span>
+                </div>
+                <div class="stat-item">
+                  <span class="label">Market Beta</span>
+                  <span id="m-beta" class="value">1.15</span>
+                </div>
+                <div class="stat-item">
+                  <span class="label">Return on Equity</span>
+                  <span id="m-roe" class="value">8.0%</span>
+                </div>
+              </div>
+              
+              <div class="mt-3" style="display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.8rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+                <div class="receipt-row" style="margin: 0;">
+                  <span>Market Cap:</span>
+                  <strong id="m-cap">LKR 300.2 Billion</strong>
+                </div>
+                <div class="receipt-row" style="margin: 0;">
+                  <span>Daily Volume:</span>
+                  <strong id="m-volume">1,245,600</strong>
+                </div>
+                <div class="receipt-row" style="margin: 0;">
+                  <span>GICS Sector:</span>
+                  <strong id="m-sector" class="text-accent">Capital Goods</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Virtual Trading Box -->
+            <div class="glass-card py-3 px-3 primary-edge" style="margin: 0;">
+              <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem;"><i data-lucide="briefcase"></i> Trading Simulator Sandbox</h4>
+              
+              <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                <label class="btn btn-secondary flex-grow-1 py-2" style="cursor: pointer; font-size: 0.8rem;">
+                  <input type="radio" name="trade-action" value="buy" checked style="accent-color: var(--primary);"> BUY
+                </label>
+                <label class="btn btn-secondary flex-grow-1 py-2" style="cursor: pointer; font-size: 0.8rem;">
+                  <input type="radio" name="trade-action" value="sell" style="accent-color: var(--primary);"> SELL
+                </label>
+              </div>
+
+              <div class="trade-form-box">
+                <div class="form-group">
+                  <label for="trade-qty" class="form-label" style="font-size: 0.75rem;">Shares Quantity</label>
+                  <input type="number" id="trade-qty" class="form-input py-1" value="1000" min="1" step="100" style="font-size: 0.85rem; padding: 0.4rem;">
+                </div>
+
+                <div class="form-group mt-2">
+                  <label for="trade-stock-price" class="form-label" style="font-size: 0.75rem;">Price per Share (LKR)</label>
+                  <input type="number" id="trade-stock-price" class="form-input py-1" value="192.50" min="0.01" step="0.05" style="font-size: 0.85rem; padding: 0.4rem;">
+                </div>
+
+                <div class="trade-totals">
+                  <div class="trade-total-row">
+                    <span>Market Value:</span>
+                    <span id="trade-est-value">LKR 192,500.00</span>
+                  </div>
+                  <div class="trade-total-row">
+                    <span>Statutory Fees (0.82%):</span>
+                    <span id="trade-est-fees">LKR 1,578.50</span>
+                  </div>
+                  <div class="trade-total-row grand">
+                    <span id="trade-grand-label">Estimated Cost:</span>
+                    <span id="trade-grand-total" class="text-emerald">LKR 194,078.50</span>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-primary w-100 mt-3 py-2" style="width: 100%; font-size: 0.85rem;" onclick="processVirtualTrade()">
+                <i data-lucide="check-circle"></i> Confirm Virtual Trade
+              </button>
+            </div>
+
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script Initializers -->
+  <script src="data.js"></script>
+  <script src="advisor.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
