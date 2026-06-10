@@ -237,25 +237,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-muted);
 }
 
-.sidebar-branding {
-  margin-top: 1.25rem;
-  padding-top: 0.75rem;
-  border-top: 1px dashed rgba(255, 255, 255, 0.05);
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  text-align: center;
-  font-family: 'Outfit', sans-serif;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.sidebar-branding span {
-  background: linear-gradient(135deg, var(--accent), var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 /* Main Dashboard Panels */
 .main-content {
   padding: 2.5rem;
