@@ -452,7 +452,7 @@ const CSE_ADVISOR = (() => {
     // Default conversational fallback
     return `
       <div class="advisor-card">
-        <h4 class="card-title">Greetings! I am Ariya, your CSE Investment Advisor</h4>
+        <h4 class="card-title">Greetings! I am Ariya, your CSE Investment Advisor from SS Labz</h4>
         <p>I specialize in Colombo Stock Exchange equity markets, stock screening, transaction charges, and asset allocations. How can I guide you today?</p>
         
         <p>You can ask me questions directly, or click one of the interactive options below to run instantaneous financial evaluations:</p>

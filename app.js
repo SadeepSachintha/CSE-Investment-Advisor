@@ -56,7 +56,8 @@ function initLocalStorage() {
         text: `
           <div class="advisor-card">
             <h4>Ayubowan! 🙏 Welcome to CSE Investment Advisor</h4>
-            <p>I am <strong>Ariya</strong>, your digital investment assistant. I am pre-loaded with comprehensive metrics, financial histories, and transaction schedules for top equities listed on the Colombo Stock Exchange (CSE).</p>
+            <p class="text-accent text-small font-bold" style="margin-top: -0.25rem; margin-bottom: 0.75rem;">A Product of SS Labz</p>
+            <p>I am <strong>Ariya</strong>, your digital investment assistant developed by <strong>SS Labz</strong>. I am pre-loaded with comprehensive metrics, financial histories, and transaction schedules for top equities listed on the Colombo Stock Exchange (CSE).</p>
             <p>You can begin by reviewing your virtual <strong>LKR 1,000,000</strong> portfolio, exploring listed companies, or executing screens to find high-yield dividend shares.</p>
             <p>What financial goal can I help you achieve today?</p>
             

@@ -1,5 +1,5 @@
 ---
-title: CSE Investment Advisor
+title: CSE Investment Advisor by SS Labz
 emoji: 📈
 colorFrom: indigo
 colorTo: blue
@@ -9,14 +9,14 @@ pinned: false
 
 <div align="center">
   
-  # 📈 Colombo Stock Exchange (CSE) Investment Advisor
+  # 📈 Colombo Stock Exchange (CSE) Investment Advisor by SS Labz
   
   [![Hugging Face Space](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Space-indigo)](https://huggingface.co/spaces/dwssp/cse-investment-advisor)
   [![Platform: Web](https://img.shields.io/badge/Platform-Static%20Web-cyan)](#)
   [![Stack: HTML5%20%7C%20CSS3%20%7C%20JS](https://img.shields.io/badge/Stack-HTML5%20%7C%20CSS3%20%7C%20JS-blue)](#)
   [![License: MIT](https://img.shields.io/badge/License-MIT-emerald)](#)
 
-  **A state-of-the-art interactive virtual trading sandbox, statutory commission calculator, and AI-powered financial advisor for Sri Lankan equity markets.**
+  **A state-of-the-art interactive virtual trading sandbox, statutory commission calculator, and AI-powered financial advisor for Sri Lankan equity markets. Developed and branded by SS Labz.**
   
   [**Live Hugging Face Space Demonstration**](https://huggingface.co/spaces/dwssp/cse-investment-advisor)
 
